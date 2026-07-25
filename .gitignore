@@ -1,0 +1,18 @@
+# Binaries
+mvp
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Environment
+.env
+
+# IDE
+.idea/
+
+# Test and output
+*.test
+results/
+images/
