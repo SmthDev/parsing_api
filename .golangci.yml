@@ -1,0 +1,42 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - staticcheck
+    - unused
+    - ineffassign
+    - gocritic
+    - revive
+    - misspell
+    - nilerr
+    - errorlint
+    - bodyclose
+    - prealloc
+
+  settings:
+    errcheck:
+      exclude-functions:
+        - (io.Closer).Close
+        - (net/http.Response).Body.Close
+        - (*os.File).Close
+        - os.Remove
+        - (*database/sql.Tx).Rollback
+    gocritic:
+      enabled-tags:
+        - diagnostic
+        - style
+        - performance
+    revive:
+      rules:
+        - name: blank-imports
+        - name: unreachable-code
+        - name: unused-parameter
+    errorlint:
+      errorf: true
+      asserts: true
+      comparison: true
