@@ -60,6 +60,7 @@ func handleParse(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(result); err != nil {
 		slog.Error("encode response", "error", err)
 	}
+	
 }
 
 func extract(data []byte) (*model.Transaction, error) {
