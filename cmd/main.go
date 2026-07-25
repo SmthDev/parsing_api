@@ -22,9 +22,14 @@ func main() {
 		port = "8080"
 	}
 
+	apiKey := os.Getenv("PARSE_API_KEY")
+	if apiKey == "" {
+		log.Fatal("PARSE_API_KEY is not set")
+	}
+
 	srv := &http.Server{
 		Addr:              ":" + port,
-		Handler:           httpapi.NewMux(),
+		Handler:           httpapi.NewMux(apiKey),
 		ReadHeaderTimeout: 5 * time.Second,
 	}
 

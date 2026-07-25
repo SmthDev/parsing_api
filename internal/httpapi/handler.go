@@ -15,10 +15,10 @@ import (
 
 const maxUploadBytes = 20 << 20
 
-func NewMux() *http.ServeMux {
+func NewMux(apiKey string) *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /health", handleHealth)
-	mux.HandleFunc("POST /parse", handleParse)
+	mux.Handle("POST /parse", requireAPIKey(apiKey)(http.HandlerFunc(handleParse)))
 	return mux
 }
 
