@@ -15,7 +15,6 @@ import (
 
 const maxUploadBytes = 20 << 20
 
-
 func NewMux(apiKey string) *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /health", handleHealth)
@@ -60,7 +59,6 @@ func handleParse(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(result); err != nil {
 		slog.Error("encode response", "error", err)
 	}
-	
 }
 
 func extract(data []byte) (*model.Transaction, error) {

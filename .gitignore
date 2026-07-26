@@ -16,3 +16,4 @@ mvp
 *.test
 results/
 images/
+deploy/
