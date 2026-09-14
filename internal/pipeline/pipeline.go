@@ -33,14 +33,14 @@ func ExtractViaVision(imageData []byte) (*model.Transaction, error) {
 }
 
 
-func ExtractViaPDF(pdfPath string) (*model.Transaction, error) {
+func RenderPDFFirstPage(pdfPath string) ([]byte, error) {
 	imageData, err := pdfimage.RenderFirstPage(pdfPath)
 	if err != nil {
 		return nil, fmt.Errorf("render pdf: %w", err)
 	}
-	return ExtractViaVision(imageData)
+	slog.Info("pdf rendered", "size_bytes", len(imageData))
+	return imageData, nil
 }
-
 
 func ExtractViaOCR(imagePath string) (*model.Transaction, error) {
 	rawText, err := ocr.ExtractText(imagePath)

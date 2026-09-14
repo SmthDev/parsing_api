@@ -69,22 +69,27 @@ func handleParse(w http.ResponseWriter, r *http.Request) {
 }
 
 func extract(data []byte) (*model.Transaction, error) {
+	imageData := data
 	if pipeline.IsPDF(data) {
-		tmpPath, cleanup, err := writeTemp(data, "upload-*.pdf")
+		pdfPath, cleanup, err := writeTemp(data, "upload-*.pdf")
 		if err != nil {
 			return nil, err
 		}
 		defer cleanup()
-		return pipeline.ExtractViaPDF(tmpPath)
+
+		imageData, err = pipeline.RenderPDFFirstPage(pdfPath)
+		if err != nil {
+			return nil, err
+		}
 	}
 
-	transaction, err := pipeline.ExtractViaVision(data)
+	transaction, err := pipeline.ExtractViaVision(imageData)
 	if err == nil {
 		return transaction, nil
 	}
 	slog.Warn("vision extraction failed, falling back to OCR", "error", err)
 
-	tmpPath, cleanup, err := writeTemp(data, "upload-*.img")
+	tmpPath, cleanup, err := writeTemp(imageData, "upload-*.img")
 	if err != nil {
 		return nil, err
 	}

@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 )
 
-
 func RenderFirstPage(pdfPath string) ([]byte, error) {
 	bin, err := exec.LookPath("pdftoppm")
 	if err != nil {
