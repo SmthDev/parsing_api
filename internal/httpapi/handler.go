@@ -23,7 +23,14 @@ func NewMux(apiKey string) *http.ServeMux {
 }
 
 func handleHealth(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+	response := map[string]string{
+		"status":  "ok",
+		"message": "parce service is running",
+	}
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		slog.Error("encode health response", "error", err)
+	}
 }
 
 func handleParse(w http.ResponseWriter, r *http.Request) {
