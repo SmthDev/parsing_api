@@ -13,7 +13,7 @@ import (
 	"parce/internal/model"
 )
 
-const defaultGroqModel = "qwen/qwen3.6-27b"
+const defaultGroqModel = "qwen/qwen3.8-27b"
 
 const groqVisionPrompt = `Ты — парсер банковских карт-чеков (чеков об оплате/переводе). Тебе дано фото такого чека.
 Извлеки данные о транзакции. Верни ТОЛЬКО валидный JSON без пояснений и markdown-блоков, без лишних полей.
